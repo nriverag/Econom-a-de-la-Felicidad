@@ -1,0 +1,732 @@
+\documentclass[12pt,spanish]{article}
+\usepackage[margin=0.7in]{geometry} 
+\usepackage{cancel}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{calc,3d}
+\usepackage{graphicx}
+\usepackage{threeparttablex, booktabs}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{amsfonts}
+\usepackage{ragged2e}
+\usepackage[backend=bibtex,style=verbose-trad2]{biblatex}
+\usepackage{epstopdf}
+\usepackage{comment}
+\usepackage[none]{hyphenat}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\usepackage{cancel}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{biblatex}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\DeclareUnicodeCharacter{00B4}{\'}
+\usepackage{csquotes}
+\usepackage{mathtools}
+\usepackage{tcolorbox}
+\usepackage{paralist}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{relsize}
+\usepackage{arydshln}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lscape} 
+\usepackage{multirow}
+\setlength{\parskip}{0.5em}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newenvironment{theorem}[2][Teorema]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries 
+1
+ #2.}]}{\end{trivlist}}
+\title{\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.8]{logo-unal(1).png}
+\end{figure}
+\textbf{¿Qué crees que te haría más feliz? ¿Qué crees que elegirías? Replicación y Aplicación para Colombia}}
+
+\author{Nicolás Rivera Garzón}
+\date{Agosto 2021} 
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\justify
+\noindent  El objetivo del artículo es replicar los resultados de Benjamin, Heffetz, Kimball y Rees-Jones (2012) y caracterizar los determinantes de la felicidad en Colombia durante el año 2019. Con dicho objetivo en mente, se estiman modelos de probabilidad lineal, logit, probit, probit ordenado y logit ordenado a partir de los datos compartidos por los autores y para la apliación en Colombia a partir de los datos de la Encuesta de Calidad de Vida de 2019. Los resultados de la replicación son iguales a los expuestos por los autores y contrastan hipótesis de la literatura del SWB. Se identifican factores, como el sentido de propósito, el control sobre la vida, la felicidad familiar y el estatus social, como factores que ayudan a explicar la elección hipotética controlando el SWB predicho. Se explora cómo los resultados varían según la medida de SWB y el escenario. Con respecto a los resultado de la aplicación en Colombia, se destaca la relación positiva de los niveles ordinales de felicidad con nivel de educación, acceso a servicios públicos, afiliación a una entidad prestadora de salud, posesión de un negocio propio y estar casado. Mientras que la edad, ciudad de origen, ser mujer y trabajar como empleado doméstico está asociado a niveles de felicidad menores.\\
+
+\vspace{0.2cm}
+
+\noindent \textbf{Palabras clave:} economía de la felicidad, microeconometría, modelos ordinales, subjective well being, encuestas.
+
+\vspace{0.2cm}
+
+\noindent \textbf{JEL:}  C25, D91, I31.
+\end{abstract}
+
+\newpage
+
+\section*{1. Introducción}
+
+Por mucho tiempo los economistas han estudiado las preferencias y proceso de toma de decisiones de los individuos. Bajo este marco metodológico, la noción de felicidad se basa en el proceso de maximización de la utilidad de los individuos. Con lo que las medidas agregadas de producción como el PIB deberían tener una correlación positiva con la felicidad. Sin embargo la noción de utilidad presenta problemas metodológicos y empíricos (Rodríguez, García y Chicaiza, 2018). Una alternativa a la maximización de utilidad de la teoría neoclásica es la perspectiva de bienestar subjetivo. 
+
+Bajo este enfoque no hay función para maximizar, al contrario, el enfoque de bienestar subjetivo se basa en medir directamente cómo se sienten las personas, permitiendo así, comparaciones interpersonales y correlación con variables sociodemográficas. Empíricamente, cuando se asume que dicha utilidad subjetiva puede medirse ordinalmente, se acude a modelos probit y logit ordenados, con estos modelos es posible evaluar la relación de las características sociodemográficas del individuo con su nivel de felicidad percibido. 
+
+El estudio de la economía de la felicidad tiene una serie de ventajas para el campo de políticas públicas, Kahneman y Krueguer (2006) enumeran las siguientes, primero, las medidas de bienestar subjetivo permiten realizar análisis del bienestar de una manera más directa que podría ser un complemento útil del análisis tradicional del bienestar. En segundo lugar, los resultados actualmente disponibles sugieren que aquellos interesados en maximizar el bienestar de la sociedad deberían cambiar su atención de un énfasis en el aumento de las oportunidades de consumo a un énfasis en el aumento de los contactos sociales. En tercer lugar, un enfoque en el bienestar subjetivo podría conducir a un cambio en el énfasis de la importancia de los ingresos para determinar el bienestar de una persona hacia la importancia de su rango en la sociedad. En cuarto lugar, aunque la satisfacción con la vida es relativamente estable y muestra una adaptación considerable, puede verse afectada por cambios en la asignación del tiempo y, al menos a corto plazo, por cambios en las circunstancias.
+
+Teniendo en cuenta el contexto anterior, el objetivo del artículo es replicar los resultados de Benjamin, Heffetz, Kimball y Rees-Jones (2012) y caracterizar los determinantes de la felicidad en Colombia durante el año 2019. Con dicho objetivo en mente, se estiman modelos de probabilidad lineal, probit, probit ordenado y logit ordenado a partir de los datos compartidos por los autores y para la apliación en Colombia a partir de los datos de la Encuesta de Calidad de Vida de 2019.  
+
+Los resultados de la replicación son iguales a los expuestos por los autores y contrastan hipótesis de la literatura del SWB. Se identifican factores, como el sentido de propósito, el control sobre la vida, la felicidad familiar y el estatus social, como factores que ayudan a explicar la elección hipotética controlando el SWB predicho. Se explora cómo los resultados varían según la medida de SWB y el escenario. Con respecto a los resultado de la aplicación en Colombia, se destaca la relación positiva de los niveles ordinales de felicidad con nivel de educación, acceso a servicios públicos, afiliación a una entidad prestadora de salud, posesión de un negocio propio y estar casado. Mientras que la edad, ciudad de origen, ser mujer y trabajar como empleado doméstico está asociado a niveles de felicidad menores. 
+
+El artículo se divide en tres secciones, además de introducción y conclusión. En la primera se realiza una revisión de literatura sobre la economía de la felicidad y la teoría del bienestar subjetivo. La segunda presenta la replicación de los resultados de Benjamin, Heffetz, Kimball y Rees-Jones (2012) especificando su metodología y fuente de datos. Por último, se presentan los resultados de la aplicación para Colombia teniendo en cuenta los ámbitos sociodemográficos generales, acceso a servicios públicos, nivel educativo y situación laboral. 
+
+\section*{2. Economía de la Felicidad: Subjective Well-Being (SWB)}
+
+La literatura sobre bienestar subjetivo o subjective well-being (SWB) se preocupa por cómo y por qué las personas experimentan emociones positivas, incluyendo  juicios cognitivos y reacciones afectivas. Como tal, cubre estudios que han utilizado términos tan diversos como felicidad, satisfacción, moral y afecto. Diener (1984) agrupa las definiciones de bienestar y felicidad en tres categorías. En primer lugar, el bienestar se define por criterios externos como la virtud o la santidad. El criterio para la felicidad de este tipo no es el juicio subjetivo del encuestado, sino el marco de valores del observador. 
+
+En segundo lugar, los científicos sociales se han centrado en la cuestión de qué lleva a las personas a evaluar sus vidas en términos positivos. Esta definición de bienestar subjetivo ha llegado a denominarse satisfacción con la vida y se basa en los estándares del encuestado para determinar qué es la buena vida. Esta definición cae dentro del ámbito del bienestar subjetivo y es una idea relacionada con la satisfacción.
+
+Y en tercer lugar, la felicidad es la preponderancia del afecto positivo sobre el afecto negativo. Esta definición de bienestar subjetivo enfatiza, por lo tanto, lo placentero de la experiencia emocional. Esto puede significar que la persona está experimentando en su mayoría emociones agradables durante este período de la vida o que la persona está predispuesta a tales emociones, ya sea que las esté experimentando o no.
+
+Teniendo en cuenta lo anterior, se puede ver que el SWB es, como su nombre lo indica, subjetivo dependiente de la experiencia individual y necesita de mediciones ordinales de los aspectos de la vida del individuo. Esta mediciones son claves ya que son el insumo principal para realizar investigaciones empíricas. El uso de preguntas sobre la felicidad autoinformada ha llevado a muchos nuevos conocimientos sobre la felicidad y las motivaciones individuales. 
+
+Ferrer-i-Carbonell (2013) argumenta que si bien algunos de los resultados no son sorprendentes, por ejemplo, los individuos casados sanos y empleados son más felices que los desempleados solteros y no saludables, sin embargo, hay resultados contradictorios. Por ejemplo, la relación encontrada entre los ingresos (o el crecimiento económico) y la felicidad reportada es bastante débil, contrario a lo que se espera según las teorías estándar. 
+
+Nikolova y Graham (2020) argumentan que SWB es intrínsicamente valioso, ya que ser feliz y satisfecho con la vida es algo por lo que muchas personas se esfuerzan, ya sea consciente o inconscientemente. Además, el bienestar subjetivo es importante, ya que predice de manera creíble la productividad, la creatividad, los ingresos y los comportamientos relacionados con el trabajo, como el esfuerzo y el abandono. Por lo tanto, los relatos de las personas sobre su desempeño pueden proporcionar información y matices importantes que los indicadores de progreso estándar o los indicadores de medidas de calidad del trabajo pueden pasar por alto.
+
+Un ejemplo de estos estudios es el de Heffetz y Rabin (2013),  utilizando el número informado de intentos de llamadas realizados a los participantes en las Encuestas de consumidores de la Universidad de Michigan, muestran que las comparaciones entre los encuestados de fácil acceso difieren de las comparaciones entre los de difícil acceso. Específicamente, las mujeres de fácil acceso son más felices que los hombres de fácil acceso, pero los hombres de difícil acceso son más felices que las mujeres de difícil acceso. 
+
+En esta literatura se encuentra enmarcado el presente trabajo de replicación y aplicación para Colombia. Ambos modelos que se presentan en la siguiente sección se apoyan en variables objetivas como el género, acceso a servicios públicos y situación laboral, y en variables subjetivas como nivel de romance, emoción o sentido de propósito de su vida. Con el uso de estas variables es posible realizar un estudio empírico de la economía de la felicidad. 
+
+
+
+\section*{3. Replicación}
+\subsection*{3.1. Datos y Metodología}
+Benjamin, Heffetz, Kimball y Rees-Jones (2012) (de ahora en adelante BHKR) presentan a los encuestados escenarios hipotéticos y obtienen tanto la elección como las clasificaciones de SWB pronosticadas de dos alternativas. BHKR identifican que factores, como el sentido de propósito previsto, el control sobre la vida, la felicidad familiar y el estatus social, ayudan a explicar la elección hipotética. 
+
+La fuente de datos de los autores proviene den 29 versiones de una encuesta, que consiste en una secuencia de dos escenarios hipotéticos donde el entrevistado debe elegir uno para pasar al siguiente, además se hace una serie de preguntas de línea base. Con esto, el cuestionario es el siguiente: 
+
+1. Pensando en cómo se sintió en los últimos minutos, ¿cómo calificaría en una escala de 1 (peor) a 10 (mejor):
+\begin{table}[H]
+\centering
+\caption{Variables Exógenas}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Variable                           & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline
+Felicidad Propia                   &   &   &   &   &   &   &   &   &   &    \\ \hline
+Felicidad Familiar                 &   &   &   &   &   &   &   &   &   &    \\ \hline
+Salud                              &   &   &   &   &   &   &   &   &   &    \\ \hline
+Nivel de romance en la vida        &   &   &   &   &   &   &   &   &   &    \\ \hline
+Vida social                        &   &   &   &   &   &   &   &   &   &    \\ \hline
+Control sobre su vida              &   &   &   &   &   &   &   &   &   &    \\ \hline
+Nivel de espiritualidad de su vida &   &   &   &   &   &   &   &   &   &    \\ \hline
+Nivel de diversión de su vida      &   &   &   &   &   &   &   &   &   &    \\ \hline
+Estatus social                     &   &   &   &   &   &   &   &   &   &    \\ \hline
+Nivel de emoción de su vida        &   &   &   &   &   &   &   &   &   &    \\ \hline
+Comodidad física                   &   &   &   &   &   &   &   &   &   &    \\ \hline
+Propósito                          &   &   &   &   &   &   &   &   &   &    \\ \hline
+\end{tabular}
+\end{table}
+
+2. Digamos que tiene que decidir entre dos nuevos trabajos. Los trabajos son exactamente los mismos en casi todos los sentidos, pero tienen diferentes horas de trabajo y pagan diferentes cantidades. 
+\begin{itemize}
+    \item \textbf{Opción 1:} Un trabajo que paga \$ 80,000 por año. Las horas para este trabajo son razonables y podría dormir aproximadamente 7.5 horas en la noche de trabajo promedio.
+    \item \textbf{Opción 2:} Un trabajo que paga \$ 140,000 por año. Sin embargo, este trabajo requiere que usted vaya a trabajar a horas inusuales y solo podrá dormir alrededor de 6 horas en la noche de trabajo promedio.
+\end{itemize}
+
+Si estuviera limitado a estas dos opciones, ¿cuál cree que elegiría?
+
+\begin{table}[H]
+\centering
+\caption{Presentación de escenario descanso versus ingreso: Elección Objetiva}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{3}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Opción 1:\\ Dormir más pero ganar menos\end{tabular}}} &
+  \multicolumn{3}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Opción 2:\\ Dormir menos pero ganar más\end{tabular}}} \\ \hline
+\begin{tabular}[c]{@{}c@{}}definitivamente \\ elige\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}probablemente \\ elija\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}posiblemente \\ elegir\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}definitivamente \\ elige\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}probablemente \\ elija\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}posiblemente \\ elegir\end{tabular} \\ \hline
+ &
+   &
+   &
+   &
+   &
+   \\ \hline
+\multicolumn{6}{|c|}{Responda con una X en la línea de arriba} \\ \hline
+\end{tabular}
+\end{table}
+
+Si estuviera limitado a estas dos opciones, ¿cuál le gustaría elegir?
+
+\begin{table}[H]
+\centering
+\caption{Presentación de escenario descanso versus ingreso: Elección Subjetiva}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{3}{|c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Opción 1:\\ Dormir más pero ganar menos\end{tabular}}} &
+  \multicolumn{3}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Opción 2:\\ Dormir menos pero ganar más\end{tabular}}} \\ \hline
+\begin{tabular}[c]{@{}c@{}}definitivamente \\ quiero\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}probablemente \\ quiera\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}posiblemente \\ quiera\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}definitivamente \\ quiero\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}probablemente \\ quiera\end{tabular} &
+  \begin{tabular}[c]{@{}c@{}}posiblemente \\ quiera\end{tabular} \\ \hline
+ &
+   &
+   &
+   &
+   &
+   \\ \hline
+\multicolumn{6}{|c|}{Responda con una X en la línea de arriba} \\ \hline
+\end{tabular}
+\end{table}
+
+Entre estas dos opciones, en los pocos minutos inmediatamente posteriores a la elección, ¿qué opción cree que le haría sentirse mejor en términos de:
+
+
+\begin{table}[H]
+\centering
+\caption{Variables exógenas según la elección realizada}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Variable} &
+  \multicolumn{3}{c|}{\begin{tabular}[c]{@{}c@{}}Opción 1:\\ Dormir más pero ganar menos\end{tabular}} &
+   &
+  \multicolumn{3}{c|}{\begin{tabular}[c]{@{}c@{}}Opción 2:\\ Dormir menos pero ganar más\end{tabular}} \\ \cline{2-8} 
+ &
+  definitivamente mejor &
+  probablemente mejor &
+  posiblemente mejor &
+  ninguna diferencia &
+  posiblemente mejor &
+  probablemente mejor &
+  definitivamente mejor \\ \hline
+Felicidad Propia                   &  &  &  &  &  &  &  \\ \hline
+Felicidad Familiar                 &  &  &  &  &  &  &  \\ \hline
+Salud                              &  &  &  &  &  &  &  \\ \hline
+Nivel de romance en la vida        &  &  &  &  &  &  &  \\ \hline
+Vida social                        &  &  &  &  &  &  &  \\ \hline
+Control sobre su vida              &  &  &  &  &  &  &  \\ \hline
+Nivel de espiritualidad de su vida &  &  &  &  &  &  &  \\ \hline
+Nivel de diversión de su vida      &  &  &  &  &  &  &  \\ \hline
+Estatus social                     &  &  &  &  &  &  &  \\ \hline
+Nivel de emoción de su vida        &  &  &  &  &  &  &  \\ \hline
+Comodidad física                   &  &  &  &  &  &  &  \\ \hline
+Propósito                          &  &  &  &  &  &  &  \\ \hline
+\end{tabular}}
+\end{table}
+
+Esta es la estructura que sigue el cuestionario, donde los escenarios restantes son:
+
+3. Suponga que le prometió a un amigo cercano que asistiría a la cena de su cumpleaños número 21. Sin embargo, en el último minuto te enteras de que has ganado asientos en primera fila para ver a tu músico favorito, y el concierto es a la misma hora que la cena. Esta es la última noche del músico en la ciudad. Te enfrentas a dos opciones:
+\begin{itemize}
+    \item \textbf{Opción 1:} Faltas a la cena de cumpleaños de su amigo para asistir al concierto.
+    \item \textbf{Opción 2:} Asista a la cena de cumpleaños de su amigo y se pierda el concierto.
+\end{itemize}
+
+4. Suponga que está considerando un nuevo trabajo y tiene ofertas de dos empresas. Aunque todos los aspectos de los dos trabajos son idénticos, los salarios de los empleados son diferentes en las dos empresas debido al momento arbitrario en el que se establecieron los puntos de referencia salariales. Todos en cada empresa conocen los salarios de los demás empleados. Debe elegir una de las dos empresas, lo que significa que debe decidir entre las siguientes dos opciones:
+\begin{itemize}
+    \item \textbf{Opción 1:} Su ingreso anual es de \$ 105,000, mientras que, en promedio, otros de su nivel ganan \$ 120,000.
+    \item \textbf{Opción 2:} Su ingreso anual es de \$ 100,000, mientras que, en promedio, otros de su nivel ganan \$ 85,000.
+\end{itemize}
+
+
+5. Suponga que es un artista habilidoso y tiene que decidir entre dos trayectorias profesionales para su vida. Hay dos estilos de pintura que consideras tuyos y disfrutas de ambos por igual. El estilo 1 es mucho menos popular que el estilo 2 en la actualidad, pero sabes que será un estilo importante en el futuro.
+\begin{itemize}
+    \item \textbf{Opción 1:} Te dedicas al estilo 1. Esperas que la venta de tus cuadros te dé un ingreso de \$ 40,000 al año. Si elige este camino, no espera que su trabajo sea apreciado durante su vida, pero póstumamente tendrá un impacto en la historia del arte, alcanzará la fama y será recordado en su trabajo.
+    \item \textbf{Opción 2:} Te dedicas al Estilo 2. Esperas que la venta de tus pinturas te dé un ingreso de \$ 60,000 al año, pero no tendrás un impacto memorable.
+\end{itemize}
+
+6. Suponga que está comprando en un nuevo supermercado que acaba de abrir cerca de donde vive. Mientras camina por la exhibición de frutas frescas, se le ofrece la opción de un refrigerio gratis:
+\begin{itemize}
+    \item \textbf{Opción 1:} Una manzana recién cortada.
+    \item \textbf{Opción 2:} Una naranja recién cortada en rodajas.
+\end{itemize}
+
+7. Suponga que debido a los recortes presupuestarios, la escuela implementa una "tarifa de actividades estudiantiles"  de \$ 15 dólares a la semana para ayudar a pagar el mantenimiento de las instalaciones utilizadas para las actividades extracurriculares de los estudiantes. Sin embargo, la escuela le permite no pagar la tarifa si, en cambio, dedica 2 horas de servicio a la semana guardando libros en la biblioteca. Tiene dos opciones:
+\begin{itemize}
+    \item \textbf{Opción 1:} Dedique 2 horas a la semana a guardar libros en las estanterías.
+    \item \textbf{Opción 2:} Pague \$ 15 a la semana.
+\end{itemize}
+
+8. Supongamos que está pasando el rato con un grupo de amigos en la habitación de su amigo. Lo estás pasando realmente bien, pero se está haciendo tarde por la noche. Tienes que decidir entre dos opciones.
+\begin{itemize}
+    \item \textbf{Opción 1:} Quédate despierto una hora más. Es probable que se sienta cansado todo el día de mañana, pero esta noche en particular está pasando un momento especialmente divertido.
+    \item \textbf{Opción 2:} Discúlpese del grupo y vaya a la cama. Te decepcionará perderte la diversión, pero sabes que te sentirás mejor al día siguiente y serás más productivo al prestar atención en clase y hacer tu tarea.
+\end{itemize}
+
+9. Imagina que por primera vez en tres años, tus padres (o si tus padres se han ido, tus parientes más cercanos que son mayores que tú) han organizado una reunión familiar especial que tendrá lugar el día después del Día de Acción de Gracias. Te enfrentas a dos opciones. ¿Elegiría ir a la reunión familiar el día después del Día de Acción de Gracias (y tal vez a la cena del Día de Acción de Gracias) pero llegar allí requiere de un boleto de avión de ida y vuelta de \$ 500 para vuelos de 5 horas en cada sentido?
+\begin{itemize}
+    \item \textbf{Opción 1:} Ir a la reunión de acción de gracias, que requiere un boleto de avión de ida y vuelta de \$ 500.
+    \item \textbf{Opción 2:} Se pierde la reunión de acción de gracias, pero ahorra dinero.
+\end{itemize}
+
+10. Suponga que ha decidido dejar Cornell y se está transfiriendo a una nueva escuela. Ha sido aceptado en dos escuelas y está decidiendo adónde ir. La primera escuela es extremadamente selectiva y de alta calidad, pero está en una pequeña ciudad del campo con una escena social menos activa. La segunda escuela está en una ciudad importante con una gran escena social, pero es un poco menos conocida. ¿Cuál escogerías?
+\begin{itemize}
+    \item \textbf{Opción 1:} Escuela altamente selectiva, aislada social y geográficamente.
+    \item \textbf{Opción 2:} Escuela menos selectiva, socialmente activa y en una gran ciudad.
+\end{itemize}
+
+11. Suponga que está considerando dos pasantías de verano. Uno es extremadamente interesante e implica un trabajo que te apasiona, pero que no avanza en tu carrera. El otro probablemente será aburrido, pero lo ayudará a conseguir un trabajo en el futuro. ¿Cuál escogerías?
+\begin{itemize}
+    \item \textbf{Opción 1:} Pasantía interesante que no avanza en la carrera.
+    \item \textbf{Opción 2:} Prácticas aburridas que te ayudarán a conseguir un trabajo.
+\end{itemize}
+
+BHKR realizaron encuestas entre 2699 encuestados de tres poblaciones: 1066 pacientes de la sala de espera de un médico en Denver que participaron voluntariamente, 1000 adultos que participaron por teléfono en la Encuesta Nacional Social de Cornell (CNSS) de 2009 y forman una muestra representativa a nivel nacional y 633 estudiantes de Cornell que fueron reclutados en el campus y participaron por pago o crédito del curso.
+
+Como se ve en la estructura del cuestionario, los niveles de felicidad están en una escala ordinal susceptibles a ser modelados. Para ello, BHKR asumen que las elecciones hipotéticas en de los datos se pueden representar como la maximización de una función de utilidad $U(H(X),X)$, donde $H$ es el propio SWB y $X$ es un vector de otros factores que podrían afectar la elección tanto directa como indirectamente a través de $H$. Si $X$ incluye aspectos que no se midieron, los coeficientes pueden estar sesgados debido a variables omitidas. Psicológicamente, los coeficientes son comparables solo si los encuestados responden a las escalas de siete puntos de manera similar en los 12 aspectos.
+
+Todas las regresiones utilizan este sistema de calificaciones de aspectos de siete puntos. Cada observación es la elección de un encuestado y las calificaciones de los aspectos para un escenario. Las regresiones realizadas por los autores incluyen probit y probit ordenados con efectos fijos de escenarios (no reportados). Las variables de las regresiones MCO (modelo de probabilidad lineal) se les quita la media en el nivel de escenario, con lo que se generan coeficientes equivalentes a los generados al incluir efectos fijos del escenario. 
+
+
+
+\subsection*{3.2. Resultados}
+En la Tabla 5 se muestran los resultados principales de BHKR. En primer lugar, los coeficientes de la felicidad propia (sin importar el modelo estimado) son los de mayor magnitud y todos tienen signo positivo. Un aumento de un punto en la medida de siete puntos de SWB predicho se asocia con un aumento muy significativo de 0.46 puntos en la medida de seis puntos medida de elección.
+
+Después de felicidad propia, el coeficiente de mayor magnitud es el de propósito con 0.12, esto sugiere que tener una meta clara en un momento determinado de la vida sirve como ancla para los demás aspectos emocionales del individuo. De la mano de la variable anterior va el control sobre su vida con 0.08. La interpretación conjunta de estos dos coeficientes muestra que la combinación de propósito y capacidad de trabajar para cumplirlo, hace que los puntos de SWB aumenten a nivel individual. 
+
+En tercer lugar de importancia se encuentra la felicidad familiar con 0.08. La estructura familiar y relaciones sociales en su interior son predictores significativos del SWB. Los hallazgos también se pueden relacionar con la importancia del entorno social en la percepción del mundo individual, la relación entre variables como amigos, escuela y trabajo afecta directamente la estructura social del individuo. 
+
+Por último, el estatus social tiene un coeficiente de 0.06. El grado de estatus social atribuido a la posición del encuestado está asociado a un mayor nivel de SWB. Un mayor estatus social está asociado con una capacidad mayor de para vivir de acuerdo con un conjunto de ideales o principios considerados importantes por la sociedad o algún grupo social dentro de ella. Se podría decir que un mayor estatus está relacionado con individuos en posiciones más fuertes y dominantes lo que repercute en más aspectos de su vida. 
+
+En general se ve que el mejor modelo es el de probabilidad lineal solo con el regresor de felicidad propia, ya que logra un pseudo $R^2$ de 0.38. Esto confirma un hecho clave en la literatura de bienestar subjetivo, es posible tratar medidas ordinales de felicidad individual como medidas de SWB. Con esto, el ejercicio de aplicación para Colombia queda justificado. El segundo mejor modelo vuelve a ser de probabilidad lineal por MCO, donde los coeficientes estadísticamente significativos, como ya se había mencionado, son felicidad propia, felicidad familiar, control sobre su vida, nivel de diversión de su vida, estatus social, comodidad física y propósito con un pseudo $R^2$ de 0.41. 
+
+\begin{table}[H]
+    \centering
+    \caption{Regresiones de elección sobre aspectos de la vida.}
+    {
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{5}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{MCO}&\multicolumn{1}{c}{MCO}&\multicolumn{1}{c}{MCO}&\multicolumn{1}{c}{Probit Ordenado}&\multicolumn{1}{c}{Probit}\\
+\hline
+Felicidad Propia&        0.54\sym{***}&                     &        0.46\sym{***}&        0.37\sym{***}&        0.37\sym{***}\\
+            &     (0.009)         &                     &     (0.010)         &     (0.009)         &     (0.012)         \\
+[1em]
+Felicidad Familiar&                     &        0.16\sym{***}&        0.08\sym{***}&        0.06\sym{***}&        0.09\sym{***}\\
+            &                     &     (0.017)         &     (0.015)         &     (0.012)         &     (0.017)         \\
+[1em]
+Salud      &                     &        0.07\sym{**} &        0.00         &        0.01         &        0.01         \\
+            &                     &     (0.021)         &     (0.019)         &     (0.016)         &     (0.022)         \\
+[1em]
+Nivel de romance en la vida&                     &       -0.00         &       -0.01         &       -0.00         &       -0.00         \\
+            &                     &     (0.024)         &     (0.021)         &     (0.018)         &     (0.025)         \\
+[1em]
+Vida social &                     &       -0.01         &       -0.03         &       -0.02         &       -0.02         \\
+            &                     &     (0.020)         &     (0.018)         &     (0.015)         &     (0.021)         \\
+[1em]
+Control sobre su vida&                     &        0.17\sym{***}&        0.08\sym{***}&        0.06\sym{***}&        0.09\sym{***}\\
+            &                     &     (0.017)         &     (0.015)         &     (0.012)         &     (0.017)         \\
+[1em]
+Nivel de espiritualidad de su vida&                     &       -0.08\sym{***}&       -0.02         &       -0.02         &       -0.04         \\
+            &                     &     (0.024)         &     (0.021)         &     (0.018)         &     (0.025)         \\
+[1em]
+Nivel de diversión de su vida&                     &        0.13\sym{***}&        0.05\sym{*}  &        0.04\sym{*}  &        0.04\sym{*}  \\
+            &                     &     (0.021)         &     (0.018)         &     (0.015)         &     (0.021)         \\
+[1em]
+Estatus social&                     &        0.07\sym{***}&        0.06\sym{***}&        0.05\sym{***}&        0.07\sym{***}\\
+            &                     &     (0.016)         &     (0.014)         &     (0.012)         &     (0.016)         \\
+[1em]
+Nivel de emoción de su vida&                     &        0.07\sym{***}&       -0.01         &        0.00         &        0.00         \\
+            &                     &     (0.020)         &     (0.017)         &     (0.014)         &     (0.020)         \\
+[1em]
+Comodidad física&                     &        0.09\sym{***}&        0.04\sym{**} &        0.04\sym{**} &        0.05\sym{**} \\
+            &                     &     (0.017)         &     (0.014)         &     (0.012)         &     (0.017)         \\
+[1em]
+Propósito &                     &        0.21\sym{***}&        0.12\sym{***}&        0.10\sym{***}&        0.12\sym{***}\\
+            &                     &     (0.015)         &     (0.013)         &     (0.011)         &     (0.015)         \\
+Observaciones       &        6217         &        6217         &        6217         &        6217         &        6217         \\
+$R^2$ (Pseudo)   &        0.38         &        0.21         &        0.41         &             0.19        &                    0.35 \\
+\hline\hline
+\multicolumn{6}{l}{\footnotesize Errores estándar en paréntesis.}\\
+\multicolumn{6}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+}
+    \label{tab:tab1}
+\end{table}
+
+BHKR comparan escenarios para saber en qué situaciones la suposición de que las elecciones de las personas maximizan su SWB predicho es una mejor o peor aproximación. Sus resultados se encuentran en la Tabla 5. El $R^2$ incremental La fila reporta la diferencia entre los $R^2$ de las regresiones multivariadas informadas y los $R^2$ de las regresiones univariadas de elección solo en la propia felicidad (los autores no reportan estos resultados, sin embargo, para la repliación, estos resultados están reportado en el script realizado en STATA). 
+
+BHKR encuentran que la mayoría de los encuestados exhiben al menos una contradicción de elecciones y que muy pocos exhiben contradicciones en la mitad o más de los escenarios. Además, para algunos de los encuestados no muestran una contradicción en las elecciones de SWB si la compensación de ese escenario entre SWB y otros factores es suficiente. 
+
+\begin{table}[H]
+    \centering
+    \caption{Regresiones de elección por MCO en todos los aspectos de la vida.}
+    {
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l*{11}{c}}
+\hline\hline
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Todos \\ los\\ escenarios\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Sueño \\ vs\\ Ingresos\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Concierto \\ vs\\ Cumpleaños\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Ingreso absoluto \\ vs\\ Ingreso relativo\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Legado \\ vs\\ Ingreso\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Manzana \\ vs\\ Naranja\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Dinero \\ vs\\ Tiempo\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Socializar \\ vs\\ Dormir\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Familia \\ vs\\ Dinero\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Educación \\ vs\\ Vida Social\end{tabular}}
+        &\multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Interés \\ vs\\ Carrera\end{tabular}}\\
+        
+        \hline
+        Felicidad Propia   &     0.46\sym{***}&     0.38\sym{***}&     0.44\sym{***}&     0.52\sym{***}&     0.44\sym{***}&     0.73\sym{***}&     0.53\sym{***}&     0.31\sym{***}&     0.53\sym{***}&     0.35\sym{***}&     0.27\sym{***}\\
+        
+        &  (0.010)         &  (0.031)         &  (0.031)         &  (0.032)         &  (0.031)         &  (0.036)         &  (0.036)         &  (0.032)         &  (0.033)         &  (0.029)         &  (0.030)         \\
+        [1em]
+        
+        Felicidad Familiar&     0.08\sym{***}&     0.07\sym{*}  &     0.01         &     0.16\sym{***}&     0.05         &     0.16         &     0.15\sym{*}  &    -0.09         &     0.05         &     0.14\sym{***}&     0.21\sym{***}\\
+        
+        &  (0.015)         &  (0.032)         &  (0.071)         &  (0.046)         &  (0.041)         &  (0.159)         &  (0.059)         &  (0.053)         &  (0.050)         &  (0.037)         &  (0.041)         \\
+        [1em]
+        
+        Salud          &     0.00         &    -0.05         &    -0.07         &    -0.11         &    -0.04         &     0.05         &     0.06         &     0.18\sym{***}&     0.05         &    -0.03         &    -0.06         \\
+        
+        &  (0.019)         &  (0.055)         &  (0.076)         &  (0.077)         &  (0.058)         &  (0.065)         &  (0.075)         &  (0.054)         &  (0.057)         &  (0.044)         &  (0.063)         \\
+        [1em]
+        
+        Nivel de romance en la vida&    -0.01         &     0.08         &    -0.02         &     0.07         &    -0.00         &    -0.67\sym{**} &    -0.10         &     0.02         &    -0.03         &     0.01         &     0.01         \\
+        
+        &  (0.021)         &  (0.059)         &  (0.064)         &  (0.078)         &  (0.066)         &  (0.228)         &  (0.086)         &  (0.054)         &  (0.068)         &  (0.053)         &  (0.072)         \\
+        [1em]
+
+        Vida social     &    -0.03         &    -0.02         &     0.02         &    -0.01         &     0.00         &     0.02         &     0.04         &    -0.00         &    -0.05         &    -0.04         &     0.01         \\
+        
+        &  (0.018)         &  (0.055)         &  (0.043)         &  (0.056)         &  (0.058)         &  (0.225)         &  (0.071)         &  (0.065)         &  (0.053)         &  (0.053)         &  (0.054)         \\
+        [1em]
+        
+        Control sobre su vida&     0.08\sym{***}&     0.02         &     0.05         &     0.04         &     0.08\sym{*}  &    -0.00         &     0.07         &     0.15\sym{***}&     0.05         &     0.06         &     0.07\sym{*}  \\
+        
+        &  (0.015)         &  (0.042)         &  (0.053)         &  (0.056)         &  (0.039)         &  (0.093)         &  (0.052)         &  (0.043)         &  (0.049)         &  (0.038)         &  (0.035)         \\
+        [1em]
+        
+        Nivel de espiritualidad de su vida&    -0.02         &    -0.04         &    -0.00         &    -0.16         &     0.13\sym{*}  &     0.31         &    -0.15         &    -0.01         &    -0.15\sym{*}  &    -0.00         &    -0.01         \\
+        
+        &  (0.021)         &  (0.049)         &  (0.061)         &  (0.090)         &  (0.055)         &  (0.221)         &  (0.091)         &  (0.076)         &  (0.062)         &  (0.054)         &  (0.068)         \\
+        [1em]
+        
+        Nivel de diversión de su vida&     0.05\sym{*}  &     0.06         &     0.15\sym{**} &     0.04         &     0.05         &    -0.08         &     0.13         &    -0.03         &     0.03         &     0.06         &    -0.00         \\
+        
+        &  (0.018)         &  (0.042)         &  (0.051)         &  (0.066)         &  (0.047)         &  (0.127)         &  (0.068)         &  (0.073)         &  (0.059)         &  (0.057)         &  (0.057)         \\
+        [1em]
+        
+        Estatus social   &     0.06\sym{***}&    -0.00         &     0.04         &     0.05         &     0.04         &    -0.27         &    -0.01         &     0.06         &     0.11         &     0.06\sym{*}  &     0.16\sym{***}\\
+        
+        &  (0.014)         &  (0.036)         &  (0.045)         &  (0.040)         &  (0.036)         &  (0.227)         &  (0.061)         &  (0.059)         &  (0.060)         &  (0.029)         &  (0.043)         \\
+        [1em]
+        
+        Nivel de emoción de su vida&    -0.01         &     0.05         &    -0.03         &     0.22\sym{**} &    -0.01         &     0.09         &    -0.03         &     0.18\sym{**} &    -0.05         &    -0.02         &     0.05         \\
+        
+        &  (0.017)         &  (0.037)         &  (0.054)         &  (0.078)         &  (0.047)         &  (0.121)         &  (0.060)         &  (0.062)         &  (0.061)         &  (0.055)         &  (0.055)         \\
+        [1em]
+        
+        Comodidad física&     0.04\sym{**} &     0.09\sym{*}  &     0.00         &    -0.05         &     0.00         &     0.21\sym{**} &    -0.00         &     0.05         &    -0.10\sym{*}  &     0.06         &    -0.02         \\
+        
+        &  (0.014)         &  (0.036)         &  (0.060)         &  (0.054)         &  (0.042)         &  (0.066)         &  (0.049)         &  (0.048)         &  (0.041)         &  (0.040)         &  (0.049)         \\
+        [1em]
+        
+        Propósito&     0.12\sym{***}&     0.17\sym{***}&     0.12\sym{**} &     0.12\sym{**} &     0.12\sym{**} &     0.29\sym{*}  &     0.05         &     0.04         &     0.09\sym{*}  &     0.17\sym{***}&     0.17\sym{***}\\
+        
+        &  (0.013)         &  (0.038)         &  (0.047)         &  (0.044)         &  (0.041)         &  (0.119)         &  (0.050)         &  (0.044)         &  (0.046)         &  (0.037)         &  (0.029)         \\
+        
+        \hline
+
+        Observaciones    &     6217         &      615         &      621         &      620         &      624         &      624         &      619         &      622         &      625         &      626         &      621         \\
+        
+        \(R^{2}\)       &     0.41         &     0.46         &     0.43         &     0.53         &     0.41         &     0.58         &     0.42         &     0.32         &     0.38         &     0.43         &     0.37         \\
+        
+        $R^2$ Incremental   &     0.03         &     0.06         &     0.03         &     0.04         &     0.04         &     0.02         &     0.02         &     0.07         &     0.02         &     0.08         &     0.13         \\
+        
+        \hline\hline
+        
+        \multicolumn{12}{l}{\footnotesize Errores estándar en paréntesis.}\\
+        \multicolumn{12}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+        \end{tabular}
+        }
+        }
+    \label{tab:tab2b}
+\end{table}
+
+Los autores encuentran otros hecho interesante, el orden de los escenarios en el cuestionario tiene un efecto significativo en las respuestas de los encuestados. Los efectos pueden deberse al aumento de la fatiga o el aburrimiento entre los encuestados. 
+
+
+\section*{4. Aplicación para Colombia}
+\subsection*{4.1. Datos y Metodología}
+Para la aplicación en Colombia se usan datos a nivel nacional tomado de la Encuesta de Calidad de Vida de 2019 que caracteriza los diferentes aspectos involucrados en el bienestar de los hogares. La publicación de esta encuesta se hace a través de diferentes diccionarios, que básicamente  son bases de datos enfocadas en un solo aspecto. Una vez se tienen los diccionarios de interés, se combinan los diferentes diccionarios en una sola base de datos usando las variables de directorio, secuencia de encuesta, secuencia de persona y orden como número de identificación. La concatenación de estas variables crea un ID único por persona, con lo que se puede construir una base de datos con un grupo de variables variadas. Con ellos se logra construir una base de datos con 92984 individuos que son representativos del país.
+
+La variable de interés es ordinal con la siguiente pregunta ¿Qué tan feliz se sintió el día de ayer? Donde 0 significa que no experimento para nada esa sensación y 10 significa que experimentó todo el tiempo esa sensación.
+
+\begin{table}[H]
+\caption{Medición de Bienestar Subjetivo ECV 2019.}
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+¿Qué tan feliz se sintió el día de ayer? & Frecuencia & Porcentaje & Porcentaje Acumulado \\ \hline
+0     & 1485  & 1.60   & 1.60   \\ \hline
+1     & 402   & 0.43   & 2.03   \\ \hline
+2     & 892   & 0.96   & 2.99   \\ \hline
+3     & 1526  & 1.64   & 4.63   \\ \hline
+4     & 2298  & 2.47   & 7.10   \\ \hline
+5     & 6068  & 6.53   & 13.63  \\ \hline
+6     & 7343  & 7.90   & 21.52  \\ \hline
+7     & 13459 & 14.47  & 36.00  \\ \hline
+8     & 21719 & 23.36  & 59.36  \\ \hline
+9     & 12840 & 13.81  & 73.17  \\ \hline
+10    & 24952 & 26.83  & 100.00 \\ \hline
+Total & 92984 & 100.00 &        \\ \hline
+\end{tabular}
+\label{tab:tab3}
+\end{table}
+
+En la Tabla 7 se observa la distribución en las respuestas de los encuestados, donde el 26.83\% afirma que se sintió feliz todo el tiempo, mientras que el 1.60\% se sintió triste todo el tiempo. La distribución de las respuestas tiene un sesgo hacía niveles de felicidad mayor, sin embargo es necesario controlar con variables exógenas.  Ya que el objetivo es caracterizar las determinantes de la Felicidad en Colombia durante 2019, se construyen los siguientes grupos de variables: 
+\begin{itemize}
+    \item Características generales: género, grupo etario, estado civil, variable binaria que indica que vive en el mismo municipio donde nació y una variable binaria que indica si se considera o no campesino. 
+    \item Características de la vivienda: región geográfica, acceso a electricidad, acueducto, alcantarillado y recolección de basuras. 
+    \item Nivel educativo: primaria, secundaria y terciaria. 
+    \item Características laborales: variables binarias que indican si tiene empleo, contrato formal, afiliación a EPS y ARL, y variables binarias de posición ocupacional que indican si es empleado privado, público, doméstico o empleador. 
+\end{itemize}
+
+Para cada grupo de variables se estima un modelo sobre el nivel de felicidad que responden los encuestados, con lo que el modelo general a estimar es: 
+\begin{align*}
+    Pr[y_i=j]&=Pr[\alpha_{j-1}< x_{i}^{T}\beta+u_i\leq \alpha_j]  \\
+    &=Pr[\alpha_{j-1}-x_{i}^{T}\beta< u_i\leq \alpha_j-x_{i}^{T}\beta]\\
+    &= F(\alpha_j-x_{i}^{T}\beta)-F(\alpha_{j-1}-x_{i}^{T}\beta)
+\end{align*}
+donde F es la función de distribución acumulada de $u_i$. Los parámetros $\beta$ de la regresión son obtenidos maximizando la función de log-verosimilitud. Para el modelo logístico la función de distribución es $F(z)=e^{z}/(1+e^{z})$. Para el modelo probit la distribución de $u$ es una normal estándar. Con esto, se estiman un modelo logit ordenado y un modelo probit ordenado por cada conjunto de variables, para identificar la relación de las variables exógenas con el nivel de felicidad. 
+\subsection*{4.2. Resultados}
+En la Tabla 8 se encuentran los resultados del primer modelo planteado sobre características generales.  En primer lugar, las mujeres tienden a responder en niveles de felicidad más bajos que los hombres, dado que las demás se mantienen constantes. El logit ordenado muestra que las mujeres están 0.13 en niveles de felicidad más bajos que los hombres, mientras que el probit ordenado dice que ese valor es de -0.09. En cuanto a los grupos etarios, a mayor edad menor es el nivel de felicidad, de hecho, a partir de los 45 años el coeficiente se vuelve negativo. El mayor nivel de felicidad lo experimentan las personas entre 18 y 25 con un aumento de 0.18 y 0.11 unidades para llegar al nivel superior de felicidad ordinal. 
+
+Los individuos casados experimentan mayores niveles de felicidad que los no casados, siendo el efecto significativo al 1\%. Por su parte vivir en el mismo municipio de nacimiento tiene una relación negativa con la escala de felicidad, de nuevo, siendo el efecto significativo al 1\%. Por último, cuando los individuos se consideran campesinos, su felicidad baja a niveles inferiores con 0.12 y 0.07. 
+\begin{table}[H]
+    \centering
+    \caption{Regresiones ordinales en características generales}
+    {
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{Logit Ordenado}&\multicolumn{1}{c}{Probit Ordenado}\\
+\hline
+Mujer       &       -0.13\sym{***}&       -0.09\sym{***}\\
+            &     (0.013)         &     (0.007)         \\
+[1em]
+18-25           &        0.18\sym{***}&        0.11\sym{***}\\
+            &     (0.051)         &     (0.030)         \\
+[1em]
+26-45           &        0.07         &        0.04         \\
+            &     (0.046)         &     (0.027)         \\
+[1em]
+45-60           &       -0.02         &       -0.01         \\
+            &     (0.044)         &     (0.026)         \\
+[1em]
+60+          &       -0.08         &       -0.04         \\
+            &     (0.044)         &     (0.026)         \\
+[1em]
+Casado      &        0.19\sym{***}&        0.11\sym{***}\\
+            &     (0.014)         &     (0.009)         \\
+[1em]
+Ciudad de origen         &       -0.10\sym{***}&       -0.05\sym{***}\\
+            &     (0.012)         &     (0.007)         \\
+[1em]
+Campesino   &       -0.12\sym{***}&       -0.07\sym{***}\\
+            &     (0.012)         &     (0.007)         \\
+Constante      &        0.89\sym{***}&        0.55\sym{***}\\
+            &     (0.047)         &     (0.028)         \\
+\hline
+Observaciones       &       92984         &       92984         \\
+\hline\hline
+        \multicolumn{12}{l}{\footnotesize Errores estándar en paréntesis.}\\
+        \multicolumn{12}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+}
+    \label{tab:tab4}
+\end{table}
+
+En la Tabla 9 se encuentran los resultados del segundo modelo planteado sobre características de la vivienda. Se crearon una serie de variables indicadores de zona geográfica, con el objetivo de observar las tendencias de felicidad en el país. Las únicas dos zonas con coeficientes positivos son la Central y el Valle del Cauca en el modelo logit ordenado. Los demás coeficientes de zona resultan ser negativos, pero en su mayoría no son significativos, sugiriendo que no existe una relación clara entre nivel de felicidad y ubicación geográfica. 
+
+En cuanto a la relación felicidad con acceso a servicios la relación obtenida es clara, el acceso a esta clase de servicios se traduce en mayores niveles de felicidad. El acceso a electricidad es el servicio más importante con coeficientes de 0.21 y 0.13, ambos significativos al 5\%. La recolección de basuras, alcantarillado y acueducto le siguen en magnitud a la electricidad.  A diferencia de la electricidad, este grupo de servicios públicos no logra rechazar la hipótesis de no significancia a ningún nivel. 
+\begin{table}[H]
+    \centering
+    \caption{Regresiones ordinales en características de la vivienda}
+    {
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+&\multicolumn{1}{c}{Logit Ordenado}&\multicolumn{1}{c}{Probit Ordenado}\\
+\hline
+Caribe      &       -0.30\sym{***}&       -0.19\sym{***}\\
+            &     (0.052)         &     (0.032)         \\
+[1em]
+Oriental    &       -0.22\sym{***}&       -0.14\sym{***}\\
+            &     (0.052)         &     (0.032)         \\
+[1em]
+Central     &        0.02         &       -0.01         \\
+            &     (0.052)         &     (0.032)         \\
+[1em]
+Pacífico    &       -0.83\sym{***}&       -0.49\sym{***}\\
+            &     (0.053)         &     (0.033)         \\
+[1em]
+Bogotá     &       -0.19\sym{**} &       -0.13\sym{***}\\
+            &     (0.064)         &     (0.039)         \\
+[1em]
+Antioquia   &       -0.16\sym{**} &       -0.11\sym{**} \\
+            &     (0.059)         &     (0.036)         \\
+[1em]
+Valle del Cauca      &        0.02         &       -0.01         \\
+            &     (0.060)         &     (0.036)         \\
+[1em]
+Orinoquía-Amazonía  &       -0.45\sym{***}&       -0.26\sym{***}\\
+            &     (0.052)         &     (0.032)         \\
+[1em]
+Electricidad&        0.21\sym{***}&        0.13\sym{***}\\
+            &     (0.027)         &     (0.016)         \\
+[1em]
+Acueducto   &       0.02         &       0.01         \\
+            &     (0.017)         &     (0.010)         \\
+[1em]
+Alcantarillado&        0.01         &        0.01         \\
+            &     (0.017)         &     (0.010)         \\
+[1em]
+Basura      &        0.05\sym{**} &        0.02         \\
+            &     (0.018)         &     (0.011)         \\
+
+Constante      &        0.97\sym{***}&        0.58\sym{***}\\
+            &     (0.056)         &     (0.034)         \\
+\hline
+Observaciones       &       92984         &       92984         \\
+\hline\hline
+        \multicolumn{12}{l}{\footnotesize Errores estándar en paréntesis.}\\
+        \multicolumn{12}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+}
+    \label{tab:tab5}
+\end{table}
+En la Tabla 10 se encuentran los resultados del tercer modelo planteado sobre niveles de educación. En primer lugar, los individuos que cuentan solo con educación primaria tienen mayores probabilidades de estar en niveles de felicidad inferiores que los individuos con más años de educación. La relación entre educación y felicidad es positiva y significativa. El impacto positivo de mayor magnitud se da en los encuestados que tienen títulos de educación terciaria con 0.40 y 0.23 en los modelos logit y probit ordenados respectivamente. 
+\begin{table}[H]
+    \caption{Regresiones ordinales en niveles de educación}
+    \centering
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+&\multicolumn{1}{c}{Logit Ordenado}&\multicolumn{1}{c}{Probit Ordenado}\\
+\hline
+Primaria    &       -0.01         &       -0.00         \\
+            &     (0.015)         &     (0.009)         \\
+[1em]
+Secundaria  &        0.20\sym{***}&        0.11\sym{***}\\
+            &     (0.017)         &     (0.010)         \\
+[1em]
+Terciaria   &        0.40\sym{***}&        0.23\sym{***}\\
+            &     (0.019)         &     (0.011)         \\
+
+Constante      &        1.10\sym{***}&        0.68\sym{***}\\
+            &     (0.012)         &     (0.007)         \\
+\hline
+Observaciones       &       92984         &       92984         \\
+\hline\hline
+        \multicolumn{12}{l}{\footnotesize Errores estándar en paréntesis.}\\
+        \multicolumn{12}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+}
+    \label{tab:tab5}
+\end{table}
+En la Tabla 11 se encuentran los resultados del cuarto modelo planteado sobre características laborales. En primer lugar y el resultado principal de este modelo, los encuestados con empleo alcanzan niveles de felicidad mayores que los que están desempleados, específicamente, de 0.15 y 0.10 con ambos significativos al 1\%. En cuanto a forma de vinculación, los encuestados con contrato directo, afiliación a entidad prestadora de salud (EPS) y administrado de riesgos laborales (ARL) son más felices que los que tienen empleo informal sin estos beneficios de seguridad social. 
+
+De las variables anteriores, la principal es la afiliación a EPS, que se puede interpretar con acceso a servicios de salud y prevención de enfermedades. El efecto para alcanzar niveles superiores de felicidad es de 0.10 en el logit y 0.06 en el probit. En cuanto al tipo de empleado, los empleados doméstico son los únicos con niveles de felicidad inferiores a los demás tipos de empleados. Por último, si un encuestado ocupa la posición ocupacional de patrón o empleador, tiene un efecto positivo a mayores niveles de felicidad de 0.39 en el logit y 0.22 en el probit, ambos efectos significativos al 1\%. 
+
+\begin{table}[H]
+    \caption{Regresiones ordinales en características laborales}
+    \centering
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+&\multicolumn{1}{c}{Logit Ordenado}&\multicolumn{1}{c}{Probit Ordenado}\\
+\hline
+Con empleo     &        0.15\sym{***}&        0.10\sym{***}\\
+            &     (0.014)         &     (0.008)         \\
+[1em]
+Contrato    &        0.08         &        0.05         \\
+            &     (0.046)         &     (0.027)         \\
+[1em]
+EPS         &        0.10\sym{***}&        0.06\sym{***}\\
+            &     (0.025)         &     (0.014)         \\
+[1em]
+ARL         &        0.29\sym{***}&        0.17\sym{***}\\
+            &     (0.025)         &     (0.015)         \\
+[1em]
+Empleado Privado&        0.11\sym{***}&        0.07\sym{***}\\
+            &     (0.023)         &     (0.013)         \\
+[1em]
+Empleado Público &        0.08\sym{*}  &        0.05\sym{*}  \\
+            &     (0.038)         &     (0.023)         \\
+[1em]
+Empleado Doméstico &       -0.08         &       -0.05         \\
+            &     (0.053)         &     (0.031)         \\
+[1em]
+Patrón o empleador     &        0.39\sym{***}&        0.22\sym{***}\\
+            &     (0.039)         &     (0.023)         \\
+Constante      &        1.29\sym{***}&        0.79\sym{***}\\
+            &     (0.026)         &     (0.015)         \\
+\hline
+Observaciones       &       92984         &       92984         \\
+\hline\hline
+        \multicolumn{12}{l}{\footnotesize Errores estándar en paréntesis.}\\
+        \multicolumn{12}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+}
+
+\label{tab:tab7}
+\end{table}
+
+\section*{5. Conclusiones}
+
+Este documento presenta la repliación de los resultados de Benjamin, Heffetz, Kimball y Rees-Jones (2012) y caracteriza los determinantes de la felicidad en Colombia durante el año 2019. El análisis conducido se guía explícitamente en el marco teórico y la revisión de literatura presentada, ello con el fin de identificar exitosamente las relaciones dinámicas que se dan entre
+las variables elegidas. Metodológicamente, se acude al uso de  modelos de probabilidad lineal, logit, probit, probit ordenado y logit ordenado.
+
+Los resultados de la replicación son iguales a los expuestos por los autores y contrastan hipótesis de la literatura del SWB. Se identifican factores, como el sentido de propósito, el control sobre la vida, la felicidad familiar y el estatus social, como factores que ayudan a explicar la elección hipotética controlando el SWB predicho. Se explora cómo los resultados varían según la medida de SWB y el escenario. Con respecto a los resultado de la aplicación en Colombia, se destaca la relación positiva de los niveles ordinales de felicidad con nivel de educación, acceso a servicios públicos, afiliación a una entidad prestadora de salud, posesión de un negocio propio y estar casado. Mientras que la edad, ciudad de origen, ser mujer y trabajar como empleado doméstico está asociado a niveles de felicidad menores.
+
+
+
+
+
+\section*{6. Referencias} 
+\indent Benjamin, Daniel J., Ori Heffetz, Miles S. Kimball, \& Alex Rees-Jones. 2012. What Do You Think Would Make You Happier? What Do You Think You Would Choose? American Economic Review, 102 (5): 2083-2110. \\
+
+\indent Cameron, Adrian, \& Pravin Trivedi. 2005. Microeconometrics: Methods and Applications. Cambridge. \\
+
+\indent Diener, Edward. 1984. Subjective Well-Being. Psychological Bulletin, 95 (3) \\
+
+\indent Ferrer-i-Carbonell, Ada. 2013. Happiness economics. SERIEs, 4: 35–60.\\
+
+\indent Heffetz, Ori, \& Matthew Rabin. 2013. Conclusions Regarding Cross-Group Differences in Happiness Depend on Difficulty of Reaching Respondents. American Economic Review, 103 (7): 3001-21. \\
+
+\indent Johns, Helen \& Ormerod, Paul. 2007. Happiness, Economics and Public Policy. Institute of Economic Affairs, Research Monograph 62 \\
+
+\indent Kahneman, Daniel, \& Alan B. Krueger. 2006. Developments in the Measurement of Subjective Well-Being. Journal of Economic Perspectives, 20 (1): 3-24. \\
+
+\indent Nikolova, Milena, \& Carol Graham. 2020. The Economics of Happiness. 
+Global Labor Organization (GLO) Discussion Paper No. 640 \\
+
+\indent Rodríguez, Jhonathan, Mario García Molina, \& Liliana Chicaíza. 2018. Felicidad en la política pública: una revisión de literatura. Cuadernos de Economía, 37(73): 95-119. \\
+\end{document}
