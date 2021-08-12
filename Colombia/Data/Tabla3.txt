@@ -1,0 +1,10 @@
+	(1)
+VARIABLES	Regresión de elección en SWB OLS
+	
+own_happiness	0.540***
+	(0.00880)
+	
+Observations	6,217
+R-squared	0.377
+Standard errors in parentheses	
+*** p<0.01, ** p<0.05, * p<0.1	
